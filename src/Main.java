@@ -28,7 +28,7 @@ public class Main {
     public static final String QUIT_MSG = "Goodbye!";
     public static final String COMMAND_ERROR = "Unknown command.";
     public static final String HAS_CONTACTS_WITH_SAME_NUMBER = "There are contacts that share phone numbers.";
-    public static final String ALL_CONTACTS_HAVE_DIFFERENT_NUMBERS = "All contacts have different phone numbers";
+    public static final String ALL_CONTACTS_HAVE_DIFFERENT_NUMBERS = "All contacts have different phone numbers.";
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
@@ -62,7 +62,7 @@ public class Main {
                     getContact(in,cBook);
                     break;
                 case SAME_NUMBER:
-                    getContactsWithSameNumber(in,cBook);
+                    getContactsWithSameNumber(cBook);
                     break;
                 default:
                     System.out.println(COMMAND_ERROR);
@@ -159,16 +159,17 @@ public class Main {
         else System.out.println(BOOK_EMPTY);
     }
 
-
     private static void getContact(Scanner in, ContactBook cBook) {
-        String contact = cBook.getContactByPhone(in.nextInt());
+        int phone = in.nextInt();
+        in.nextLine();
+        String contact = cBook.getContactByPhone(phone);
         if (contact != null) System.out.println(contact);
         else System.out.println(PHONE_NOT_EXIST);
     }
 
-    private static void getContactsWithSameNumber(Scanner in, ContactBook cBook) {
-        int phone = in.nextInt();
-        if (cBook.hasContactsWithSameNumber(phone)) System.out.println(HAS_CONTACTS_WITH_SAME_NUMBER);
+    private static void getContactsWithSameNumber(ContactBook cBook) {
+        if (cBook.hasContactsWithSameNumber())
+            System.out.println(HAS_CONTACTS_WITH_SAME_NUMBER);
         else System.out.println(ALL_CONTACTS_HAVE_DIFFERENT_NUMBERS);
 
     }

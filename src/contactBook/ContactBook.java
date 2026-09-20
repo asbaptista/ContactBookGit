@@ -1,6 +1,5 @@
 package contactBook;
 
-import contactBook.Contact;
 
 public class ContactBook {
     static final int DEFAULT_SIZE = 100;
@@ -74,9 +73,8 @@ public class ContactBook {
     }
 
     private void resize() {
-        Contact tmp[] = new Contact[2*contacts.length];
-        for (int i=0;i<counter; i++)
-            tmp[i] = contacts[i];
+        Contact[] tmp = new Contact[2*contacts.length];
+        if (counter >= 0) System.arraycopy(contacts, 0, tmp, 0, counter);
         contacts = tmp;
     }
 
@@ -102,5 +100,19 @@ public class ContactBook {
         return null;
     }
 
+    public boolean hasContactsWithSameNumber(){
+            int listSize = getNumberOfContacts();
 
-}
+            for (int i = 0; i < listSize - 1; i++) {
+                Contact current = contacts[i];
+                for (int j = i + 1; j < listSize; j++) {
+                    Contact next = contacts[j];
+
+                    if (current.getPhone() == next.getPhone()) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+    }
